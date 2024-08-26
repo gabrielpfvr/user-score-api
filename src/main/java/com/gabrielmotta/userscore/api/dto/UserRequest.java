@@ -2,6 +2,7 @@ package com.gabrielmotta.userscore.api.dto;
 
 import com.gabrielmotta.userscore.api.annotation.Cep;
 import com.gabrielmotta.userscore.domain.enums.Role;
+import lombok.Builder;
 import lombok.Data;
 
 import jakarta.validation.constraints.Email;
@@ -11,6 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Data
+@Builder
 public class UserRequest {
 
     @NotBlank
