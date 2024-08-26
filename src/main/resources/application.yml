@@ -31,6 +31,9 @@ spring:
     ansi:
       enabled: ALWAYS
 
+client:
+  brasil-api-cep: https://brasilapi.com.br/api/cep/v2/
+
 jwt:
   expires: 86400
   public-key: classpath:keys/public.pub

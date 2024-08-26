@@ -56,6 +56,9 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         var username = this.extractUsername(token);
+        if (!userDetails.isAccountNonLocked()) {
+            return false;
+        }
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

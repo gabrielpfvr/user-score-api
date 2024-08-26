@@ -31,8 +31,10 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(permitAll).permitAll()
-                .requestMatchers("/test/admin/**").hasAuthority(Role.ADMIN.name())
-                .requestMatchers("/test/user/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
+                .requestMatchers(HttpMethod.POST, "/users").hasAuthority(Role.ADMIN.name())
+                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
+                .requestMatchers(HttpMethod.PUT, "/users/**").hasAuthority(Role.ADMIN.name())
+                .requestMatchers(HttpMethod.DELETE, "/users/{id}").hasAuthority(Role.ADMIN.name())
                 .anyRequest().authenticated())
             .csrf(AbstractHttpConfigurer::disable)
             .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
