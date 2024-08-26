@@ -18,11 +18,11 @@ public class LoginService {
     public LoginResponse login(LoginRequest loginRequest) {
         var user = this.userService.findByEmail(loginRequest.getUsername());
 
-        if (!user.isLoginCorrect(loginRequest, this.passwordEncoder)) {
+        if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, this.passwordEncoder)) {
             throw new BadCredentialsException("Wrong username/password!");
         }
 
-        var token = this.jwtService.generateToken(user);
+        var token = this.jwtService.generateToken(user.get());
 
         return LoginResponse.builder()
             .token(token)

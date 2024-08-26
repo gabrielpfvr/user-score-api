@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +15,8 @@ public class UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    public User findByEmail(String email) {
-        return this.repository.findByEmail(email)
-            .orElseThrow(() -> new EntityNotFoundException("User not found!"));
+    public Optional<User> findByEmail(String email) {
+        return this.repository.findByEmail(email);
     }
 
 //    public User create(CreateUserDto dto) {
