@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping
-    public PagedModel<UserResponse> getAllPageable(UserFilter userFilter, CustomPageRequest pageable) {
+    public PagedModel<UserResponse> getAllPaged(UserFilter userFilter, CustomPageRequest pageable) {
         return this.userService.findAll(userFilter, pageable);
     }
 
