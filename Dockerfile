@@ -12,4 +12,4 @@ COPY ${JAR_FILE} application.jar
 ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /application.jar"]
 
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
-    CMD curl -f http://localhost:8001/actuator/health || exit 1
+    CMD curl -f http://localhost:8002/actuator/health || exit 1
