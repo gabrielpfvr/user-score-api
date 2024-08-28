@@ -1,10 +1,15 @@
 package com.gabrielmotta.userscore.helpers;
 
+import com.gabrielmotta.userscore.api.dto.LoginRequest;
 import com.gabrielmotta.userscore.api.dto.UserRequest;
+import com.gabrielmotta.userscore.api.dto.UserResponse;
 import com.gabrielmotta.userscore.domain.User;
 import com.gabrielmotta.userscore.domain.enums.Role;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserHelper {
 
@@ -27,6 +32,14 @@ public class UserHelper {
             .build();
     }
 
+    public static UserResponse mockUserResponse() {
+        return UserResponse.from(mockAdminUser());
+    }
+
+    public static Page<User> userResponsePage() {
+        return new PageImpl<>(List.of(mockAdminUser()));
+    }
+
     public static UserRequest mockUserRequest() {
         return UserRequest.builder()
             .name("Jairo")
@@ -37,6 +50,13 @@ public class UserHelper {
             .phoneNumber("43988776644")
             .score(450)
             .role(Role.USER)
+            .build();
+    }
+
+    public static LoginRequest mockLoginRequest() {
+        return LoginRequest.builder()
+            .username("user@email.com")
+            .password("12345")
             .build();
     }
 }

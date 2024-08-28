@@ -35,7 +35,7 @@ public class LoginService {
             .build();
     }
 
-    public boolean isPasswordCorrect(LoginRequest request, User user) {
+    private boolean isPasswordCorrect(LoginRequest request, User user) {
         return this.passwordEncoder.matches(request.getPassword(), user.getPassword());
     }
 }

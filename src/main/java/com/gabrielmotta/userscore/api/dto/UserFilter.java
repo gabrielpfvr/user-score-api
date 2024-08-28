@@ -2,10 +2,12 @@ package com.gabrielmotta.userscore.api.dto;
 
 import com.gabrielmotta.userscore.domain.User;
 import com.gabrielmotta.userscore.infra.repository.UserExampleBuilder;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Example;
 
 @Data
+@Builder
 public class UserFilter {
 
     private String name;
