@@ -2,7 +2,7 @@ server:
   port: 8001
 spring:
   application:
-    name: user-api
+    name: user-score-api
 
   jackson:
     default-property-inclusion: NON_NULL
@@ -38,3 +38,7 @@ jwt:
   expires: 86400
   public-key: classpath:keys/public.pub
   private-key: classpath:keys/private.key
+
+management:
+  server:
+    port: 8002
