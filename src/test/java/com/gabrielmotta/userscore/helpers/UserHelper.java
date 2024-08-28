@@ -3,6 +3,8 @@ package com.gabrielmotta.userscore.helpers;
 import com.gabrielmotta.userscore.api.dto.LoginRequest;
 import com.gabrielmotta.userscore.api.dto.UserRequest;
 import com.gabrielmotta.userscore.api.dto.UserResponse;
+import com.gabrielmotta.userscore.domain.Address;
+import com.gabrielmotta.userscore.domain.Score;
 import com.gabrielmotta.userscore.domain.User;
 import com.gabrielmotta.userscore.domain.enums.Role;
 import org.springframework.data.domain.Page;
@@ -20,16 +22,26 @@ public class UserHelper {
             .email("admin@email.com")
             .password("reallySecurePassword")
             .age(30)
+            .address(mockAddress())
+            .phoneNumber("11988776655")
+            .score(mockScore())
+            .role(Role.ADMIN)
+            .createdAt(LocalDateTime.of(2024, 8, 26, 18, 50))
+            .build();
+    }
+
+    public static Address mockAddress() {
+        return Address.builder()
             .zipCode("04794000")
             .state("SP")
             .city("São Paulo")
             .neighborhood("Vila Gertrudes")
-            .streetAddress("Avenida das Nações Unidas")
-            .phoneNumber("11988776655")
-            .score(920)
-            .role(Role.ADMIN)
-            .createdAt(LocalDateTime.of(2024, 8, 26, 18, 50))
+            .street("Avenida das Nações Unidas")
             .build();
+    }
+
+    public static Score mockScore() {
+        return Score.set(920);
     }
 
     public static UserResponse mockUserResponse() {

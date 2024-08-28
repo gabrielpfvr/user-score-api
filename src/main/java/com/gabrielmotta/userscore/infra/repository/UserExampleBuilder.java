@@ -1,5 +1,6 @@
 package com.gabrielmotta.userscore.infra.repository;
 
+import com.gabrielmotta.userscore.domain.Address;
 import com.gabrielmotta.userscore.domain.User;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -33,17 +34,18 @@ public class UserExampleBuilder {
     }
 
     public Example<User> build() {
+        var address = Address.fromZipCode(this.zipCode);
         var user = User.builder()
             .name(this.name)
             .age(this.age)
-            .zipCode(this.zipCode)
+            .address(address)
             .build();
 
         var matcher = ExampleMatcher.matchingAll()
             .withIgnoreNullValues()
             .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
             .withMatcher("age", ExampleMatcher.GenericPropertyMatchers.exact())
-            .withMatcher("zipCode", ExampleMatcher.GenericPropertyMatchers.exact());
+            .withMatcher("address.zipCode", ExampleMatcher.GenericPropertyMatchers.exact());
 
         return Example.of(user, matcher);
     }

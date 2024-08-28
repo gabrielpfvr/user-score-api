@@ -52,8 +52,8 @@ class UserTest {
 
         assertThat(user)
             .isInstanceOf(User.class)
-            .extracting("id", "name", "email", "password", "age", "zipCode", "state", "city", "neighborhood",
-                "streetAddress", "phoneNumber", "score", "role", "createdAt", "deactivatedAt")
+            .extracting("id", "name", "email", "password", "age", "address.zipCode", "address.state", "address.city",
+                "address.neighborhood", "address.street", "phoneNumber", "score.value", "role", "createdAt", "deactivatedAt")
             .containsExactly(null, "Jairo", "jairo@test.com", null, 46, "86015010", "PR", "Londrina", "Jardim Higienópolis",
                 "Avenida Higienópolis", "43988776644", 450, Role.USER, null, null);
     }
@@ -64,8 +64,8 @@ class UserTest {
 
         assertThat(mockedUser)
             .isInstanceOf(User.class)
-            .extracting("id", "name", "email", "password", "age", "zipCode", "state", "city", "neighborhood",
-                "streetAddress", "phoneNumber", "score", "role", "createdAt", "deactivatedAt")
+            .extracting("id", "name", "email", "password", "age", "address.zipCode", "address.state", "address.city",
+                "address.neighborhood", "address.street", "phoneNumber", "score.value", "role", "createdAt", "deactivatedAt")
             .containsExactly(1L, "Jairo", "jairo@test.com", "reallySecurePassword", 46, "04794000", "SP", "São Paulo",
                 "Vila Gertrudes", "Avenida das Nações Unidas", "43988776644", 450, Role.USER,
                 LocalDateTime.of(2024, 8, 26, 18, 50), null);
@@ -77,8 +77,8 @@ class UserTest {
 
         assertThat(mockedUser)
             .isInstanceOf(User.class)
-            .extracting("id", "name", "email", "password", "age", "zipCode", "state", "city", "neighborhood",
-                "streetAddress", "phoneNumber", "score", "role", "createdAt", "deactivatedAt")
+            .extracting("id", "name", "email", "password", "age", "address.zipCode", "address.state", "address.city",
+                "address.neighborhood", "address.street", "phoneNumber", "score.value", "role", "createdAt", "deactivatedAt")
             .containsExactly(1L, "Jairo", "jairo@test.com", "reallySecurePassword", 46, "86015010", "PR", "Londrina",
                 "Jardim Higienópolis", "Avenida Higienópolis", "43988776644", 450, Role.USER,
                 LocalDateTime.of(2024, 8, 26, 18, 50), null);
@@ -103,5 +103,29 @@ class UserTest {
         mockedUser.activate();
 
         assertNull(mockedUser.getDeactivatedAt());
+    }
+
+    @Test
+    void getScoreValue_shouldReturnNull_ifScoreIsNull(){
+        var user = User.builder().build();
+
+        assertNull(user.getScoreValue());
+    }
+
+    @Test
+    void getScoreValue_shouldReturnScoreValue_ifScoreIsNotNull(){
+        assertEquals(920, mockedUser.getScoreValue());
+    }
+
+    @Test
+    void getZipCode_shouldReturnNull_ifAddressIsNull(){
+        var user = User.builder().build();
+
+        assertNull(user.getZipCode());
+    }
+
+    @Test
+    void getZipCode_shouldReturnScoreValue_ifAddressIsNotNull(){
+        assertEquals("04794000", mockedUser.getZipCode());
     }
 }

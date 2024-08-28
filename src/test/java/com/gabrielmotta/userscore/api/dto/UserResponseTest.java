@@ -11,8 +11,8 @@ class UserResponseTest {
     @Test
     void from_shouldReturnUserResponse_whenCalled() {
         assertThat(UserResponse.from(mockAdminUser()))
-            .extracting("id", "name", "age", "zipCode", "state", "city", "neighborhood", "streetAddress",
-                "phoneNumber", "score", "scoreDescription", "role", "active")
+            .extracting("id", "name", "age", "address.zipCode", "address.state", "address.city", "address.neighborhood", "" +
+                    "address.street", "phoneNumber", "score", "scoreDescription", "role", "active")
             .containsExactly(
                 1L,
                 "Admin",

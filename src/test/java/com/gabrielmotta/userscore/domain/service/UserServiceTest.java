@@ -75,7 +75,7 @@ class UserServiceTest {
         verify(repository).save(userArgumentCaptor.capture());
 
         assertThat(userArgumentCaptor.getValue())
-            .extracting("zipCode", "state", "city", "neighborhood", "streetAddress", "password")
+            .extracting("address.zipCode", "address.state", "address.city", "address.neighborhood", "address.street", "password")
             .containsExactly("86015010", "PR", "Londrina", "Jardim Higienópolis", "Avenida Higienópolis", "encriptedPa$$word");
     }
 
@@ -135,7 +135,7 @@ class UserServiceTest {
     @Test
     void update_shouldUpdateUser_whenEmailNotRegistered() {
         var existingUser = mockAdminUser();
-        existingUser.setZipCode("86010020");
+        existingUser.getAddress().setZipCode("86010020");
         when(repository.findById(1L)).thenReturn(Optional.of(existingUser));
         when(repository.findByEmail("jairo@test.com")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("belinha2014")).thenReturn("encriptedPa$$word");
@@ -146,7 +146,7 @@ class UserServiceTest {
         verify(repository).save(userArgumentCaptor.capture());
 
         assertThat(userArgumentCaptor.getValue())
-            .extracting("zipCode", "state", "city", "neighborhood", "streetAddress", "password")
+            .extracting("address.zipCode", "address.state", "address.city", "address.neighborhood", "address.street", "password")
             .containsExactly("86010020", "SP", "São Paulo", "Vila Gertrudes", "Avenida das Nações Unidas", "encriptedPa$$word");
 
         verify(cepClient, never()).getCepData(anyString());
@@ -165,7 +165,7 @@ class UserServiceTest {
         verify(repository).save(userArgumentCaptor.capture());
 
         assertThat(userArgumentCaptor.getValue())
-            .extracting("zipCode", "state", "city", "neighborhood", "streetAddress", "password")
+            .extracting("address.zipCode", "address.state", "address.city", "address.neighborhood", "address.street", "password")
             .containsExactly("86015010", "PR", "Londrina", "Jardim Higienópolis", "Avenida Higienópolis", "encriptedPa$$word");
     }
 

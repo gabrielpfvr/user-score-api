@@ -12,11 +12,7 @@ public class UserResponse {
     private Long id;
     private String name;
     private Integer age;
-    private String zipCode;
-    private String state;
-    private String city;
-    private String neighborhood;
-    private String streetAddress;
+    private AddressResponse address;
     private String phoneNumber;
     private Integer score;
     private String scoreDescription;
@@ -28,13 +24,9 @@ public class UserResponse {
             .id(user.getId())
             .name(user.getName())
             .age(user.getAge())
-            .zipCode(user.getZipCode())
-            .state(user.getState())
-            .city(user.getCity())
-            .neighborhood(user.getNeighborhood())
-            .streetAddress(user.getStreetAddress())
+            .address(user.getAddress() != null ? AddressResponse.from(user.getAddress()) : null)
             .phoneNumber(user.getPhoneNumber())
-            .score(user.getScore())
+            .score(user.getScoreValue())
             .scoreDescription(user.getScoreDescription())
             .role(user.getRole())
             .active(user.isAccountNonLocked())

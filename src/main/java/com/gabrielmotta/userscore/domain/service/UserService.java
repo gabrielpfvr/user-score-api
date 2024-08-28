@@ -1,10 +1,10 @@
 package com.gabrielmotta.userscore.domain.service;
 
 import com.gabrielmotta.userscore.api.dto.CepResponse;
-import com.gabrielmotta.userscore.api.dto.UserRequest;
 import com.gabrielmotta.userscore.api.dto.CustomPageRequest;
-import com.gabrielmotta.userscore.api.dto.UserResponse;
 import com.gabrielmotta.userscore.api.dto.UserFilter;
+import com.gabrielmotta.userscore.api.dto.UserRequest;
+import com.gabrielmotta.userscore.api.dto.UserResponse;
 import com.gabrielmotta.userscore.domain.User;
 import com.gabrielmotta.userscore.domain.exception.UserScoreException;
 import com.gabrielmotta.userscore.infra.integration.CepClient;
@@ -69,7 +69,9 @@ public class UserService {
 
     public void update(Long id, UserRequest dto) {
         var user = this.findById(id);
-        this.validateExistingUser(dto.getEmail());
+        if (!Objects.equals(user.getEmail(), dto.getEmail())) {
+            this.validateExistingUser(dto.getEmail());
+        }
         CepResponse cepResponse = null;
 
         if (!Objects.equals(dto.getCep(), user.getZipCode())) {
@@ -97,6 +99,6 @@ public class UserService {
 
     public String getUserScoreDescription(Long id) {
         var user = this.findById(id);
-        return String.join(" - ", user.getScore().toString(), user.getScoreDescription());
+        return String.join(" - ", user.getScoreValue().toString(), user.getScoreDescription());
     }
 }

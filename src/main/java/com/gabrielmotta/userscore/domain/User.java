@@ -32,27 +32,26 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, length = 320)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, length = 3)
     private Integer age;
 
-    private String zipCode;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+    private Address address;
 
-    private String state;
-
-    private String city;
-
-    private String neighborhood;
-
-    private String streetAddress;
-
+    @Column(nullable = false, length = 12)
     private String phoneNumber;
 
-    private Integer score;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+    private Score score;
 
     @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
@@ -85,8 +84,8 @@ public class User implements UserDetails {
         user.setEmail(dto.getEmail());
         user.setAge(dto.getAge());
         user.setPhoneNumber(dto.getPhoneNumber());
-        user.setScore(dto.getScore());
         user.setRole(dto.getRole());
+        user.setScore(dto.getScore());
         user.copyCepData(cepResponse);
 
         return user;
@@ -96,24 +95,48 @@ public class User implements UserDetails {
         if (cepResponse != null) {
             this.copyCepData(cepResponse);
         }
+        this.setScore(dto.getScore());
         this.name = dto.getName();
         this.email = dto.getEmail();
         this.age = dto.getAge();
         this.phoneNumber = dto.getPhoneNumber();
-        this.score = dto.getScore();
         this.role = dto.getRole();
     }
 
     private void copyCepData(CepResponse cepResponse) {
-        this.zipCode = cepResponse.cep();
-        this.state = cepResponse.state();
-        this.city = cepResponse.city();
-        this.neighborhood = cepResponse.neighborhood();
-        this.streetAddress = cepResponse.street();
+        if (this.address == null) {
+            this.address = Address.from(cepResponse);
+            this.address.setUser(this);
+        } else {
+            this.address.update(cepResponse);
+        }
+    }
+
+    private void setScore(Integer score) {
+        if (this.score == null) {
+            this.score = Score.set(score);
+            this.score.setUser(this);
+        } else {
+            this.score.update(score);
+        }
     }
 
     public String getScoreDescription() {
-        return ScoreDescription.getScoreDescription(this.score);
+        return this.score != null
+            ? ScoreDescription.getScoreDescription(this.score.getValue())
+            : null;
+    }
+
+    public Integer getScoreValue() {
+        return this.score != null
+            ? this.score.getValue()
+            : null;
+    }
+
+    public String getZipCode() {
+        return this.address != null
+            ? this.address.getZipCode()
+            : null;
     }
 
     public void deactivate() {
