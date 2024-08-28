@@ -1,7 +1,7 @@
 package com.gabrielmotta.userscore.api.exception;
 
 import com.gabrielmotta.userscore.domain.exception.UserScoreException;
-import org.apache.tomcat.websocket.AuthenticationException;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
+@Hidden
 @RestControllerAdvice
 public class ExceptionHandlingController {
 
@@ -31,7 +32,7 @@ public class ExceptionHandlingController {
         return new ErrorMessage(ex.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(BadCredentialsException.class)
     public ErrorMessage handleBadCredentialsException(Exception ex) {
         return new ErrorMessage(ex.getMessage());

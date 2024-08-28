@@ -1,5 +1,7 @@
 package com.gabrielmotta.userscore.api.dto;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +12,12 @@ import org.springframework.data.domain.Sort;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class CustomPageRequest implements Pageable {
 
+    @Parameter(schema = @Schema(type = "integer($int32)", defaultValue = "0"))
     private int page;
     private int size;
+    @Parameter(description = "Default value: id")
     private String orderBy;
+    @Parameter(description = "Default value: asc")
     private String orderDirection;
 
     public CustomPageRequest() {

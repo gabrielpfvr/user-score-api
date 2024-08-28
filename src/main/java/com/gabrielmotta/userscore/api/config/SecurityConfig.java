@@ -28,7 +28,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-        String[] permitAll = {"/h2-console/**", "/auth", "/actuator/**", "/error"};
+        String[] permitAll = {"/h2-console/**", "/auth", "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/error"};
 
         return http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()

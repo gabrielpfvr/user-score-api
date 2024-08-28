@@ -31,6 +31,10 @@ spring:
     ansi:
       enabled: ALWAYS
 
+app:
+  name: ${spring.application.name}
+  version: @project.version@
+
 client:
   brasil-api-cep: https://brasilapi.com.br/api/cep/v2/
 
@@ -42,3 +46,8 @@ jwt:
 management:
   server:
     port: 8002
+
+springdoc:
+  swagger-ui:
+    configUrl: /v3/api-docs/swagger-config
+    url: /v3/api-docs
